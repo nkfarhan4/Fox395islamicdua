@@ -19,10 +19,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.app.islamicduaapp.R;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.InterstitialAd;
 
 public class ActivityImage extends Activity implements OnClickListener{
-
+	int maincounter=0;
+	InterstitialAd interstitial;
+	com.google.android.gms.ads.AdRequest adRequest;
 	private LinearLayout img_Main;
 	private TextView txtHeading;
 	private int imageNumber = 0 , screenHeight = 0 , screenWidth = 0;
@@ -134,6 +138,10 @@ public class ActivityImage extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
 
+		interstitial = new InterstitialAd(ActivityImage.this);
+		interstitial.setAdUnitId("ca-app-pub-1878227272753934/4783548001");
+		adRequest = new com.google.android.gms.ads.AdRequest.Builder()
+				.build();
 		getScreenWidth();
 
 		Bundle bundle = getIntent().getExtras();
@@ -163,6 +171,14 @@ public class ActivityImage extends Activity implements OnClickListener{
 		ConnectionDetector cd = new ConnectionDetector(getApplicationContext());
 		if(cd.isConnectingToInternet()){
 		showAdd();
+		}
+	}
+
+	public void displayInterstitial() {
+		// If Ads are loaded, show Interstitial else show nothing.
+		if (interstitial.isLoaded()) {
+			interstitial.show();
+			//isAdLod=true;
 		}
 	}
 
@@ -589,6 +605,26 @@ public class ActivityImage extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rel_back:
+			maincounter +=1;
+
+			if(maincounter==6){
+				// Load ads into Interstitial Ads
+				interstitial.loadAd(adRequest);
+				// Prepare an Interstitial Ad Listener
+				interstitial.setAdListener(new AdListener() {
+					public void onAdLoaded() {
+						// Call displayInterstitial() function
+						maincounter=0;
+						displayInterstitial();
+
+					}
+				});
+
+
+			}
+
+
+
 			if(imageNumber == 0){				
 			}else{				
 				imageNumber = imageNumber - 1;	
@@ -616,6 +652,26 @@ public class ActivityImage extends Activity implements OnClickListener{
 			}
 			break;
 		case R.id.rel_forward:
+
+			maincounter+=1;
+
+			if(maincounter==6){
+				// Load ads into Interstitial Ads
+				interstitial.loadAd(adRequest);
+				// Prepare an Interstitial Ad Listener
+				interstitial.setAdListener(new AdListener() {
+					public void onAdLoaded() {
+						// Call displayInterstitial() function
+						maincounter=0;
+						displayInterstitial();
+
+					}
+				});
+
+
+			}
+
+
 			if(imageNumber == 96){				
 			}else{				
 				imageNumber = imageNumber + 1;
