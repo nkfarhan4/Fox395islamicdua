@@ -607,7 +607,7 @@ public class ActivityImage extends Activity implements OnClickListener{
 		case R.id.rel_back:
 			maincounter +=1;
 
-			if(maincounter==6){
+			if(maincounter==15){
 				// Load ads into Interstitial Ads
 				interstitial.loadAd(adRequest);
 				// Prepare an Interstitial Ad Listener
@@ -655,7 +655,7 @@ public class ActivityImage extends Activity implements OnClickListener{
 
 			maincounter+=1;
 
-			if(maincounter==6){
+			if(maincounter==15){
 				// Load ads into Interstitial Ads
 				interstitial.loadAd(adRequest);
 				// Prepare an Interstitial Ad Listener
